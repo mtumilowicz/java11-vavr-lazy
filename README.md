@@ -67,3 +67,34 @@ Creates a real lazy value of type T, backed by a Proxy which delegates to a Lazy
     assertThat(counter.sum(), is(1L));
     assertThat(lazyString, is(temp));
     ```
+## instance methods
+* `boolean	equals(Object o)`
+* `Option<T>	filter(Predicate<? super T> predicate)`
+* `T	get()` - 
+Evaluates this lazy value and caches it, when called the 
+first time.
+* `int	hashCode()`
+* `boolean	isEmpty()`
+    ```
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+    ```
+* `boolean	isEvaluated()`
+* `Lazy<U>	map(Function<? super T,? extends U> mapper)`
+    ```
+    @Override
+    public <U> Lazy<U> map(Function<? super T, ? extends U> mapper) {
+        return Lazy.of(() -> mapper.apply(get()));
+    }
+    ```
+* `Lazy<T>	peek(Consumer<? super T> action)`
+    ```
+    @Override
+    public Lazy<T> peek(Consumer<? super T> action) {
+        action.accept(get());
+        return this;
+    }
+    ```
+* `U	transform(Function<? super Lazy<T>,? extends U> f)`
