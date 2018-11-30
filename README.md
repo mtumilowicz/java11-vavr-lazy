@@ -18,3 +18,52 @@ CharSequence chars = Lazy.val(() -> "Yay!", CharSequence.class);
 ```
 
 # project description
+Please refer to my other vavr github projects, because we
+will not analyze similar methods:
+* https://github.com/mtumilowicz/java11-vavr-option
+* https://github.com/mtumilowicz/java11-vavr-try
+* https://github.com/mtumilowicz/java11-vavr-either
+
+## static methods
+* `Lazy<T>	narrow(Lazy<? extends T> lazy)`
+* `Lazy<T>	of(Supplier<? extends T> supplier)`
+    ```
+    var counter = new LongAdder();
+
+    Lazy<Integer> lazyInt = Lazy.of(() -> {
+        counter.increment();
+        return new Random().nextInt();
+    });
+    
+    assertThat(counter.sum(), is(0L));
+
+    Integer firstGet = lazyInt.get();
+
+    assertThat(lazyInt.get(), is(firstGet));
+    assertThat(counter.sum(), is(1L));
+
+    assertThat(lazyInt.get(), is(firstGet));
+    assertThat(counter.sum(), is(1L));
+    ```
+* `Lazy<Seq<T>>	sequence(Iterable<? extends Lazy<? extends T>> values)`
+* `T	val(Supplier<? extends T> supplier, Class<T> type)` - 
+Creates a real lazy value of type T, backed by a Proxy which delegates to a Lazy instance.
+    ```
+    var counter = new LongAdder();
+    
+    CharSequence lazyString = Lazy.val(() -> {
+        counter.increment();
+        return String.valueOf(new Random().nextInt());
+    }, CharSequence.class);
+    
+    assertThat(counter.sum(), is(0L));
+    
+    var temp = lazyString + "";
+    
+    assertThat(counter.sum(), is(1L));
+    assertThat(lazyString, is(temp));
+    
+    temp = lazyString + "";
+    assertThat(counter.sum(), is(1L));
+    assertThat(lazyString, is(temp));
+    ```
