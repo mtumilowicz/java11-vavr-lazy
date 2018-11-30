@@ -11,4 +11,10 @@ lazy evaluated value.
 Lazy is memoizing, i.e. it evaluates only once and 
 therefore is referentially transparent.**
 
+You may also create a real lazy value 
+(works only with interfaces):
+```
+CharSequence chars = Lazy.val(() -> "Yay!", CharSequence.class);
+```
+
 # project description
