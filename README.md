@@ -82,6 +82,15 @@ first time.
     }
     ```
 * `boolean	isEvaluated()`
+    ```
+    Lazy<String> lazy = Lazy.of(() -> "evaluated");
+    
+    assertFalse(lazy.isEvaluated());
+    
+    lazy.get();
+    
+    assertTrue(lazy.isEvaluated());
+    ```
 * `Lazy<U>	map(Function<? super T,? extends U> mapper)`
     ```
     @Override
@@ -89,6 +98,15 @@ first time.
         return Lazy.of(() -> mapper.apply(get()));
     }
     ```
+    * after mapping we get not evaluated lazy:
+        ```
+        Lazy<String> lazy = Lazy.of(() -> "evaluated");
+        lazy.get();
+        assertTrue(lazy.isEvaluated());
+        
+        Lazy<String> mapped = lazy.map(str -> str + "");
+        assertFalse(mapped.isEvaluated());
+        ```
 * `Lazy<T>	peek(Consumer<? super T> action)`
     ```
     @Override
