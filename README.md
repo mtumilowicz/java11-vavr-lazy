@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/mtumilowicz/java11-vavr-lazy.svg?branch=master)](https://travis-ci.com/mtumilowicz/java11-vavr-lazy)
+
 # java11-vavr-lazy
 
 _Reference_: https://static.javadoc.io/io.vavr/vavr/0.9.2/io/vavr/Lazy.html  
